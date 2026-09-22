@@ -45,7 +45,7 @@ The application is managed through ```fre-cli/fre_cli_chatbot/frontend.py```.
 To launch the browser-based chat interface:
 
 ```
-python fre-cli/fre_cli_chatbot/frontend.py ui
+python fre_cli_chatbot/frontend.py ui
 ```
 
 
@@ -54,7 +54,7 @@ python fre-cli/fre_cli_chatbot/frontend.py ui
 Before the chatbot can answer questions, you must index the FRE documentation and associated source code. You can do this via the sidebar in the Web UI or via the command line:
 
 ```
-python fre-cli/fre_cli_chatbot/frontend.py ingest /path/to/your/fre-cli
+python fre_cli_chatbot/frontend.py ingest /path/to/your/fre-cli
 ```
 
 ### Command Line Interface (Interactive)
@@ -62,7 +62,7 @@ python fre-cli/fre_cli_chatbot/frontend.py ingest /path/to/your/fre-cli
 To chat directly in your terminal:
 
 ```
-python fre-cli/fre_cli_chatbot/frontend.py query
+python fre_cli_chatbot/frontend.py query
 ```
 
 ## Technical Details
