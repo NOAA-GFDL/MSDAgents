@@ -97,6 +97,22 @@ FMS_GROUP_FILES = [
     "group__yaml__parser__mod.xml",
 ]
 
-#FMS_MD_FILES =[
-#    "horiz_interp/QUICKSTART.md"
-#]
+FMS_MD_FILES =[
+    "AUTOTOOLS_INSTRUCTIONS.md",
+    "CHANGELOG.md",
+    "CI.md",
+    "CMAKE_INSTRUCTIONS.md",
+    "CODE_OF_CONDUCT.md",
+    "CODE_STYLE.md",
+    "CONTRIBUTING.md",
+    "INSTALL.md",
+    "README.md",
+    "TESTING.md",
+    "amip_interp/amip_interp.rey_oi.md",
+    "diag_manager/README.md",
+    "diag_manager/diag_yaml_format.md",
+    "docs/diag_table.md",
+    "docs/doxygenGuide.md",
+    "docs/landingPage.md",
+    #"supported_interfaces.md",
+]

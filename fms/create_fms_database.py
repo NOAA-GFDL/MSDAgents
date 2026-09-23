@@ -10,8 +10,8 @@ from shared.utils import git_clone, run_doxygen
 
 import fmsfiles
 
-FMS_DIR = Path("./FMS")
-DOXYGEN_DIR = FMS_DIR/"docs"
+FMS_DIR = Path("/home/Ryan.Mulhall/doxygen-fixes/")
+DOXYGEN_DIR = FMS_DIR/"build"/"docs"
 XML_DIR = DOXYGEN_DIR/"xml"
 COLLECTION_NAME = "FMS"
 MARKDOWN_DIR = FMS_DIR / "markdowns"
