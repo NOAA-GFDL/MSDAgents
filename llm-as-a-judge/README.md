@@ -19,64 +19,25 @@ ollama pull nemotron-3-nano
 ```
 
 ### 2. Install Python Dependencies
-`llmjudge.py` requires Python 3.8+ and the following packages:
+`llmjudge.py` works with the same environment as the fmscoupler and fms chatbots:
+from the GFDL MSD AMD dev machine:
 ```bash
-pip install langchain-ollama langchain-core
+module load miniforge
+conda create -n msdagents python=3.12 pip
+conda activate msdagents
+pip install -e .
 ```
 These packages are included in this repository's pyproject.toml
 
 ## Required Input Files
+`llmjudge.py` requires 2 arguments:
 
-`llmjudge.py` expects two YAML files to be present in the same directory:
+-g, --groundtruth: The groundtruth yaml file
+-c, --chatbot, action="store", The chatbot log yaml file
 
-### `groundtruth.yaml`
-A simple key-value mapping of user queries to their correct, human-approved answers.
-```yaml
-"What is the capital of France?": "The capital of France is Paris."
-"How do I reset my password?": "Click on 'Forgot Password' on the login screen."
-```
+And a third, optional argument:
 
-### `catalog_bot_output_log.yaml`
-The output from Ciheim Brown's chatbot logger. It should be a list of dictionaries containing `user_query` and `ai_response`.
-```yaml
-HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
-HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK"
-HTTP Request: POST http://127.0.0.1:11434/api/chat "HTTP/1.1 200 OK"
-- timestamp: '2026-05-19T09:11:42.471930'
-  llm_model: llama3.2
-  system_prompt: 'You are a chatbot who answers questions
-
-    Context:
-
-    {context}'
-  user_query: What is the capital of France?
-  ai_response: 'Paris is the capital.'
-  retrieved_files:
-  - source: ../dir/doc/Paris.rst
-    similarity_score: 0.4691466188389781
-- timestamp: '2026-05-19T10:11:42.471930'
-  llm_model: llama3.2
-  system_prompt: 'You are a chatbot who answers questions
-
-    Context:
-
-    {context}'
-  user_query: How do I reset my password?
-  ai_response: 'I'm not sure how to do that'
-  retrieved_files:
-  - source: ../dir/doc/pass.rst
-    similarity_score: 0.5691466188389781
-
-```
-*(Note: `llmjudge.py` automatically filters out lines starting with `HTTP Request:` before parsing.)*
-
-## Usage
-
-1. Open `llmjudge.py` and verify that the `MODEL_NAME` variable matches the model you have pulled via Ollama (e.g., `MODEL_NAME = "nemotron-3-nano"`).
-2. Run the script:
-```bash
-python llmjudge.py
-```
+--simplelog: Indicates to load chatbot log simply (will not be needed when the chatybot logger is available
 
 ## Output
 

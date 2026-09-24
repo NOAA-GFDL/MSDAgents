@@ -1,4 +1,7 @@
 from pathlib import Path
+#needed for workaround until FMS PRs are merged
+import os
+import shutil
 
 from parsers.fortran_parser import doxygen_xml_parser
 import parsers.markdownfile_parser as markdownfile_parser
@@ -8,12 +11,18 @@ from shared.client import newCollection
 from shared.utils import git_clone, run_doxygen
 
 import fmsfiles
+#work around until the FMS PRs are all merged
+HOME = os.getenv("HOME")
+SOURCE_DIR = Path("/home/Ryan.Mulhall/doxygen-fixes/")
 
-FMS_DIR = Path("/home/Ryan.Mulhall/doxygen-fixes/")
+FMS_DIR = Path(f"{HOME}/doxygen-fixes/")
 DOXYGEN_DIR = FMS_DIR/"build"/"docs"
 XML_DIR = DOXYGEN_DIR/"xml"
 COLLECTION_NAME = "FMS"
 MARKDOWN_DIR = FMS_DIR / "markdowns"
+
+#work around
+shutil.copytree(SOURCE_DIR, FMS_DIR, dirs_exist_ok=True)
 
 all_collection_data = []
 

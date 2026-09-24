@@ -5,6 +5,7 @@ This script acts as an LLM judge evaluating the responses of a chatbot against
 ground truth answers.  It interacts with a locally running Ollama server.
 """
 
+import argparse
 import re
 from pathlib import Path
 from typing import Dict
@@ -12,11 +13,19 @@ import yaml
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 
+parser = argparse.ArgumentParser(description="llm as a judge chatbot evaluator")
+parser.add_argument("-g", "--groundtruth", action="store", help="The groundtruth yaml file")
+parser.add_argument("-c", "--chatbot", action="store", help="The chatbot log yaml file")
+#remove when ciheims logger is ready
+parser.add_argument("--simplelog", action="store_true", help="Indicates to load chatbot log simply")
+args = parser.parse_args()
+
+
 # File paths
 # BASELINE_FILE: evaluation dataset used as the "ground truth"
 # TEST_FILE: chatbot dataset for the LLM judge to evaluate
-BASELINE_FILE = Path("groundtruth.yaml")
-TEST_FILE = Path("catalog_bot_output_log.yaml")
+BASELINE_FILE = Path(args.groundtruth)
+TEST_FILE = Path(args.chatbot)
 OUTPUT_FILE = Path("llm_as_a_judge_results.yaml")
 # The name of the model as the backend to this LLM judge
 MODEL_NAME = "nemotron-3-nano"
@@ -43,19 +52,23 @@ def main():
 
 
     # Step 1: Parse the TEST_FILE yaml and store as a dictionary called logger_output_yaml
-    # The logger captures some lines that start with "HTTP Request" that need to be cleaned out
-    clean_yaml_string = clean_logger_file(TEST_FILE)
-    data = yaml.safe_load(clean_yaml_string)
+    # The logger captures some lines that start with "HTTP Request" that need to be cleaned outi
+    if args.simplelog:
+        with TEST_FILE.open("r", encoding="utf-8") as f:
+            logger_output_yaml: Dict[str, str] = yaml.safe_load(f)
+    else:
+        clean_yaml_string = clean_logger_file(TEST_FILE)
+        data = yaml.safe_load(clean_yaml_string)
 
-    # data is a list
-    # data[n] is a dictionary
+        # data is a list
+        # data[n] is a dictionary
 
-    # The logger yaml contains one item per query, so a loop through the list will loop over the queries
-    logger_output_yaml: Dict[str, str] = {
-        item.get("user_query", ""): item.get("ai_response", "")
-        for item in data
-        if item.get("user_query")
-    }
+        # The logger yaml contains one item per query, so a loop through the list will loop over the queries
+        logger_output_yaml: Dict[str, str] = {
+            item.get("user_query", ""): item.get("ai_response", "")
+            for item in data
+            if item.get("user_query")
+        }
 
     # Step 2: Parse the BASELINE_FILE yaml and store as a dictionary called groundtruth_yaml
     with BASELINE_FILE.open("r", encoding="utf-8") as f:
@@ -76,7 +89,8 @@ def main():
         "10=perfectly accurate (word for word)). Provide your reasoning for giving the score.\n"
         "Format your response EXACTLY as the following YAML (do not include markdown backticks):\n"
         "score: <the score>\n"
-        "reasoning: <the reasoning>"
+        "reasoning: |\n"
+        "  <the reasoning>"
     )
  
     # Create the chain
@@ -114,7 +128,7 @@ def main():
         # Save the query and evaluation in a dictionary
         try:
             judge_responses[query] = yaml.safe_load(content)
-        except yaml/YAMLError as e:
+        except yaml.YAMLError as e:
             print(f"YAML Parsing Errror for query '{query}': {e}")
             judge_responses[query] = content
 
