@@ -25,8 +25,6 @@ This tool is a RAG (Retrieval-Augmented Generation) chatbot designed to assist s
 2. Run the setup script to create the environment and install dependencies:
 
 ```
-chmod +x setup_env.sh
-
 ./setup_env.sh
 ```
 
