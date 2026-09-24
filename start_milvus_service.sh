@@ -12,7 +12,7 @@ touch -a user.yaml
 
 podman run -d \
         --name milvus-standalone \
-	--replace \
+        --replace \
         --security-opt seccomp:unconfined \
         -e ETCD_USE_EMBED=true \
         -e ETCD_DATA_DIR=/var/lib/milvus/etcd \
