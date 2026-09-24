@@ -44,7 +44,7 @@ chatbot = RAGChatbot(
 
 #needed for autoeval
 if args.test:
-    BASELINE_FILE = Path("groundtruth.yaml")
+    BASELINE_FILE = Path("fmscoupler_groundtruth.yaml")
     #$ Parse the BASELINE_FILE yaml and store as a dictionary called groundtruth_yaml
     with BASELINE_FILE.open("r", encoding="utf-8") as f:
         groundtruth_yaml: Dict[str, str] = yaml.safe_load(f)
