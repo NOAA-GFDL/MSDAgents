@@ -1,8 +1,8 @@
-Steps for running fmscoupler chatbot on AMD dev box
+Steps for running FMSCoupler chatbot on AMD dev box
 
-Ollama is already running on AMD; as long as you do not change tyhe OLLAMA_CHAT_MODEL in fmscoupler/chatbot.py, the model is already pulled and you do not need to do any Ollama setup.
+Ollama is already running on AMD; as long as you do not change the OLLAMA_CHAT_MODEL in fmscoupler/chatbot.py, the model is already pulled and you do not need to do any Ollama setup.
 
-1. Configure your environemnt
+1. Configure your environment
 
 module load miniforge
 conda create -n msdagents python=3.12 pip
@@ -22,6 +22,6 @@ Then, you can create the database:
 cd fmscoupler
 python create_database.py
 
-3. Run the Chatbot
+3. Last Step: Run the Chatbot
 
 python chatbot.py
